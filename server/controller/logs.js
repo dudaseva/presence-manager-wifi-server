@@ -1,8 +1,5 @@
 const express = require('express');
-const _ = require('lodash');
 const logs = express.Router({mergeParams: true});
-const {ObjectID} = require('mongodb');
-const shell = require('shelljs');
 const schedule = require('node-schedule');
 const arp = require('node-arp');
 const ping = require('ping');
@@ -13,7 +10,7 @@ const {Log} = require('../models/log');
 const hosts = [];
 
 for (let i = 0; i < 256; i++) {
-  hosts.push(`192.168.43.${i}`)
+  hosts.push(`192.168.5.${i}`)
 }
 
 // SCAN ARP
