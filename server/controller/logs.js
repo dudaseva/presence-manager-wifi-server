@@ -84,5 +84,12 @@ logs.patch('/', (req, res) => {
 });
 
 // GET /logs
+logs.get('/', (req, res) => {
+  Log.find().then((users) => {
+    res.status(200).send(users);
+  }, (e) => {
+    res.status(400).send(e);
+  });
+});
 
 module.exports = logs;
