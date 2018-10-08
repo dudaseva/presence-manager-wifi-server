@@ -66,4 +66,21 @@ logs.delete('/:id', (req, res) => {
   });
 });
 
+// PATCH /logs
+logs.patch('/', (req, res) => {
+  Log.findOneAndUpdate({
+    _user: req.body._user
+  }, { $set: { macAddress: req.body.macAddress } }, { new: true, runValidators: true }).then(log => {
+    if (!log) {
+      return res.status(404).send();
+    }
+
+    res.status(200).send(log);
+  }).catch(err => {
+    if (err) {
+      res.status(400).send();
+    }
+  });
+});
+
 module.exports = logs;
