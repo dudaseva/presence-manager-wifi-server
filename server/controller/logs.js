@@ -83,4 +83,6 @@ logs.patch('/', (req, res) => {
   });
 });
 
+// GET /logs
+
 module.exports = logs;
