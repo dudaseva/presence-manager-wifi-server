@@ -43,7 +43,7 @@ schedule.scheduleJob('*/1 * * * *', function(){
   });
 });
 
-// POST /services
+// POST /logs
 logs.post('/', (req, res) => {
 
   let log = new Log({
@@ -54,6 +54,16 @@ logs.post('/', (req, res) => {
   log.save()
     .then(doc => res.send(doc))
     .catch(e => res.status(400).send(e));
+});
+
+// DELETE /logs
+logs.delete('/:id', (req, res) => {
+
+  Log.deleteOne({ '_user': req.params.id }).then((user) => {
+    res.send(user);
+  }, (e) => {
+    res.status(400).send(e);
+  });
 });
 
 module.exports = logs;
