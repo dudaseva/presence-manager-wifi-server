@@ -1,0 +1,12 @@
+{
+  "development": {
+    "PORT": 3001,
+    "MONGODB_PATH": "mongodb://localhost:27017/PresenceManagerWifi",
+    "BASH_SCRIPT": "arp -a"
+  },
+  "test": {
+    "PORT": 3001,
+    "MONGODB_PATH": "mongodb://localhost:27017/PresenceManagerWifiTest",
+    "BASH_SCRIPT": "echo asd123 | sudo -S arp-scan --interface=en0 --localnet"
+  }
+}
