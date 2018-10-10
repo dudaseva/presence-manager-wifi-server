@@ -30,9 +30,7 @@ LogSchema.methods.addTimeSameDay = function (index) {
 
   log.logs[index].lastCheckIn = moment().format('MMMM Do YYYY, h:mm:ss a');
 
-  console.log(log.logs);
-
-  log.save();
+  return log.save();
 };
 
 LogSchema.methods.addTimeNewDay = function () {
@@ -43,29 +41,7 @@ LogSchema.methods.addTimeNewDay = function () {
 
   log.logs = log.logs.concat([{subjectDate: subjectDate, firstCheckIn: time}]);
 
-  console.log(log.logs);
-
-  log.save();
-};
-
-
-LogSchema.methods.addTime = function () {
-  let log = this;
-  let time = moment().format('MMMM Do YYYY, h:mm:ss a');
-  let subjectDate = moment().format('MMMM Do YYYY');
-
-
-  if (!log.logs[log.logs.length - 1]) {
-
-    log.logs = log.logs.concat([{subjectDate: subjectDate, firstCheckIn: time}]);
-  } else if (log.logs[log.logs.length - 1] || log.logs[log.logs.length - 1].firstCheckIn) {
-    log.logs[log.logs.length - 1].lastCheckIn = time;
-  }
-
-  console.log(log.logs);
-
-
-  log.save();
+  return log.save();
 };
 
 let Log = mongoose.model('Log', LogSchema);

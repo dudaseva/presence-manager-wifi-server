@@ -29,7 +29,6 @@ schedule.scheduleJob('*/1 * * * *', function(){
                     let index = item.logs.findIndex(obj => {
                       return obj.subjectDate === moment().format('MMMM Do YYYY')
                     });
-                    console.log(JSON.stringify(item, undefined, 2));
                     if (index >= 0) {
                       item.addTimeSameDay(index);
                     } else {
@@ -84,7 +83,7 @@ logs.patch('/', (req, res) => {
   });
 });
 
-// PATCH /logs
+// PATCH /logs/presence/edit
 logs.patch('/presence/edit', (req, res) => {
   Log.update({_user : req.body._user, "logs._id": req.body._id},
     {$set: {"logs.$.firstCheckIn": req.body.firstCheckIn, "logs.$.lastCheckIn": req.body.lastCheckIn}})
@@ -104,6 +103,27 @@ logs.get('/', (req, res) => {
   }, (e) => {
     res.status(400).send(e);
   });
+});
+
+// POST /logs/presence/manual
+logs.post('/presence/manual', (req, res) => {
+  Log.findOne({_user: req.body._user})
+    .then(item => {
+      if (item) {
+        let index = item.logs.findIndex(obj => {
+          return obj.subjectDate === moment().format('MMMM Do YYYY')
+        });
+        if (index >= 0) {
+          item.addTimeSameDay(index)
+            .then((response) => res.status(200).send(response))
+            .catch(error => res.status(400).send(error));
+        } else {
+          item.addTimeNewDay()
+            .then((response) => res.status(200).send(response))
+            .catch(error => res.status(400).send(error));
+        }
+      }
+    });
 });
 
 module.exports = logs;
