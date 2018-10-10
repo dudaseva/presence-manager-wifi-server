@@ -4,6 +4,7 @@ const schedule = require('node-schedule');
 const arp = require('node-arp');
 const ping = require('ping');
 const moment = require('moment');
+const {ObjectID} = require('mongodb');
 
 const {Log} = require('../models/log');
 
@@ -81,6 +82,19 @@ logs.patch('/', (req, res) => {
       res.status(400).send();
     }
   });
+});
+
+// PATCH /logs
+logs.patch('/presence/edit', (req, res) => {
+  Log.update({_user : req.body._user, "logs._id": req.body._id},
+    {$set: {"logs.$.firstCheckIn": req.body.firstCheckIn, "logs.$.lastCheckIn": req.body.lastCheckIn}})
+    .then(log => {
+      if (!log) {
+        return res.status(404).send();
+      }
+      res.status(200).send(log)
+    })
+    .catch(error => res.status(400).send(error))
 });
 
 // GET /logs
