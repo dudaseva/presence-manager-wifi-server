@@ -109,6 +109,10 @@ logs.get('/', (req, res) => {
 logs.post('/presence/manual', (req, res) => {
   Log.findOne({_user: req.body._user})
     .then(item => {
+      if (!item) {
+        res.status(404).send();
+      }
+
       if (item) {
         let index = item.logs.findIndex(obj => {
           return obj.subjectDate === moment().format('MMMM Do YYYY')
@@ -123,7 +127,35 @@ logs.post('/presence/manual', (req, res) => {
             .catch(error => res.status(400).send(error));
         }
       }
-    });
+    })
+    .catch(error => {
+      res.status(400).send(error);
+  })
 });
+
+// GET /logs/presence/manual
+logs.get('/presence/manual/:id', (req, res) => {
+  Log.findOne({_user: req.params.id})
+    .then(item => {
+      if (!item) {
+        res.status(404).send();
+      }
+
+      if (item) {
+        let index = item.logs.findIndex(obj => {
+          return obj.subjectDate === moment().format('MMMM Do YYYY')
+        });
+        if (index >= 0) {
+          res.status(200).send({alreadyInToday: true})
+        } else {
+          res.status(200).send({alreadyInToday: false})
+        }
+      }
+    })
+    .catch(error => {
+      res.status(400).send(error);
+    })
+});
+
 
 module.exports = logs;
