@@ -2,10 +2,6 @@ const mongoose = require('mongoose');
 const moment = require('moment');
 
 let LogSchema = new mongoose.Schema({
-  _user: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true
-  },
   macAddress: {
     type: String,
     required: true,
