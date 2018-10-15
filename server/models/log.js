@@ -24,15 +24,15 @@ let LogSchema = new mongoose.Schema({
 LogSchema.methods.addTimeSameDay = function (index) {
   let log = this;
 
-  log.logs[index].lastCheckIn = moment().format('MMMM Do YYYY, h:mm:ss a');
+  log.logs[index].lastCheckIn = moment().format('hh:mm:ss.SSS');
 
   return log.save();
 };
 
 LogSchema.methods.addTimeNewDay = function () {
   let log = this;
-  let time = moment().format('MMMM Do YYYY, h:mm:ss a');
-  let subjectDate = moment().format('MMMM Do YYYY');
+  let time = moment().format('hh:mm:ss.SSS');
+  let subjectDate = moment().format('YYYY-MM-DD');
 
 
   log.logs = log.logs.concat([{subjectDate: subjectDate, firstCheckIn: time}]);

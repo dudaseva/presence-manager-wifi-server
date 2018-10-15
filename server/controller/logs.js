@@ -26,7 +26,7 @@ schedule.scheduleJob('*/1 * * * *', function(){
                 .then(item => {
                   if (item) {
                     let index = item.logs.findIndex(obj => {
-                      return obj.subjectDate === moment().format('MMMM Do YYYY')
+                      return obj.subjectDate === moment().format('YYYY-MM-DD')
                     });
                     if (index >= 0) {
                       item.addTimeSameDay(index);
@@ -89,7 +89,7 @@ logs.post('/', (req, res) => {
 
       if (item) {
         let index = item.logs.findIndex(obj => {
-          return obj.subjectDate === moment().format('MMMM Do YYYY')
+          return obj.subjectDate === moment().format('YYYY-MM-DD')
         });
         if (index >= 0) {
           item.addTimeSameDay(index)
@@ -117,7 +117,7 @@ logs.get('/:id', (req, res) => {
 
       if (item) {
         let index = item.logs.findIndex(obj => {
-          return obj.subjectDate === moment().format('MMMM Do YYYY')
+          return obj.subjectDate === moment().format('YYYY-MM-DD')
         });
         if (index >= 0) {
           res.status(200).send({alreadyInToday: true})
@@ -130,6 +130,5 @@ logs.get('/:id', (req, res) => {
       res.status(400).send(error);
     })
 });
-
 
 module.exports = logs;
