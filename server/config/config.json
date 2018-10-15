@@ -1,7 +1,7 @@
 {
   "development": {
     "PORT": 3001,
-    "MONGODB_PATH": "mongodb://localhost:27017/PresenceManagerWifi",
+    "MONGODB_PATH": "mongodb://localhost:27017/PresenceManagerWifi"
   },
   "test": {
     "PORT": 3001,
