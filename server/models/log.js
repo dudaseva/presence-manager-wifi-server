@@ -4,7 +4,6 @@ const moment = require('moment');
 let LogSchema = new mongoose.Schema({
   macAddress: {
     type: String,
-    required: true,
     minlength: 5
   },
   logs: [{

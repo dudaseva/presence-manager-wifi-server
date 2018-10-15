@@ -9,13 +9,12 @@ const {Log} = require('../models/log');
 
 const hosts = [];
 
-for (let i = 0; i < 256; i++) {
-  hosts.push(`192.168.0.${i}`)
+for (let i = 0; i < 255; i++) {
+  hosts.push(`192.168.5.${i}`)
 }
 
 // SCAN ARP
 schedule.scheduleJob('*/1 * * * *', function(){
-  console.log(new Date());
   hosts.forEach(host => {
     ping.promise.probe(host)
       .then(res => {
